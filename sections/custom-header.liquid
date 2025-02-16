@@ -1,0 +1,133 @@
+{% schema %}
+{
+  "name": "Responsive Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "subheading_text",
+      "label": "Subheading",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "CHOOSE GIFT →"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Responsive Header",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="custom-header-section">
+  <div class="custom-header-container">
+    <div class="menu-icon">☰</div>
+    <div class="header-brand">
+      {{ section.settings.heading_text }}
+    </div>
+    <div class="header-subheading">
+      {{ section.settings.subheading_text }}
+    </div>
+    <div class="header-button">
+      <a href="{{ section.settings.button_url }}" class="header-cta">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+.custom-header-section {
+  width: 100%;
+  background: #fafafa;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.custom-header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  position: relative;
+  column-gap: 20px;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.header-brand {
+  font-size: 20px;
+  font-weight: 700;
+  justify-self: start;
+}
+
+.header-subheading {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  justify-self: center;
+}
+
+.header-button {
+  justify-self: end;
+}
+
+.header-cta {
+  background: #ff0;
+  padding: 10px 20px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: none;
+  text-transform: uppercase;
+}
+
+.header-cta:hover {
+  background: #ffcc00;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .custom-header-container {
+    grid-template-columns: 1fr; 
+    justify-content: center;
+  }
+  .menu-icon {
+    display: block; /* show hamburger on mobile */
+    position: absolute;
+    left: 20px;
+  }
+  .header-brand {
+    margin: 0 auto;
+  }
+  .header-subheading {
+    display: none; /* hide subheading on mobile */
+  }
+  .header-button {
+    display: none; /* hide button on mobile */
+  }
+}
+</style>

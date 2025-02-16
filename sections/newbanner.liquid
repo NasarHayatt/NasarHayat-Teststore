@@ -1,0 +1,165 @@
+{% schema %}
+{
+  "name": "New Banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "The Gift Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<section 
+  class="gift-guide-banner" 
+  style="background-image: url('{{ section.settings.background_image | img_url: 'master' }}');"
+>
+  <div class="banner-content">
+    <h1 class="banner-heading">{{ section.settings.title }}</h1>
+
+    {% capture desc_text %}
+      {{ section.settings.description | strip_newlines | strip }}
+    {% endcapture %}
+    {% assign splitted = desc_text | split: '.' %}
+    {% assign splitted_size_minus_one = splitted.size | minus: 1 %}
+
+    <div class="banner-subheading">
+      {{ splitted[0] }}.
+      {% if splitted_size_minus_one > 0 %}
+        <span class="hide-on-mobile">
+          {% for i in (1..splitted_size_minus_one) %}
+            {{ splitted[i] | strip }}.
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+
+    <a href="{{ section.settings.button_link }}" class="shop-button">{{ section.settings.button_text }} →</a>
+  </div>
+</section>
+
+<style>
+.gift-guide-banner {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 5%;
+  position: relative;
+}
+
+.banner-content {
+  max-width: 400px;
+  margin-bottom: 8%;
+  text-align: left;
+}
+
+.banner-heading {
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0 0 15px;
+}
+
+.banner-subheading {
+  font-size: 18px;
+  margin: 0 0 25px;
+}
+
+.shop-button {
+  display: inline-block;
+  background: black;
+  color: white;
+  padding: 12px 24px;
+  font-size: 18px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.shop-button:hover {
+  transform: scale(1.05);
+}
+
+.hide-on-mobile {
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  .gift-guide-banner {
+    background-image: url('{{ section.settings.mobile_image | img_url: "master" }}');
+    background-position-y: 90px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .banner-content {
+    margin-top: -35px;
+    margin-bottom: 0;
+    max-width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+
+  .banner-heading {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .banner-subheading {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .shop-button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+</style>
